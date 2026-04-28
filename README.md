@@ -11,6 +11,7 @@ As my senior Project, I decided to build a program that automatically:
 
 * $git clone https://github.com/watanabed0706/dylans.surf.sessions
 * ??
+* ./Auto_Edit.sh $DATE $PATH_TO_SD_CARD
 
 ## Requirements:
 ### GoPro HERO 11
@@ -33,10 +34,6 @@ As my senior Project, I decided to build a program that automatically:
 
 ## Code Breakdown:
 
-### Auto_Edit.sh:
-  - Given args are Target_Date(YYYY-MM-DD) and the path to the SD-CARD
-    - If no date is specified, uses today
-    - If no path, defaults to "/mnt/hero11sd/DCIM/100GOPRO"
 ### The data directory:
 - lrv_list.txt:
     - Lists all Low Resolution Videos from target date
@@ -55,4 +52,21 @@ As my senior Project, I decided to build a program that automatically:
 - gpmf.json:
     - Where my-gpmf.js saves data for getter.py to process it
     - Overwritten every clip
+
+### Auto_Edit.sh:
+The Main Script in the Program
+
+  - Arguments:
+    - Target_Date (YYYY-MM-DD)
+      - Default: Today's Date
+    - SEARCH_DIR
+      - Default: "/mnt/hero11sd/DCIM/100GOPRO"
+
+  - Execution Gist:
+    - Gathers Sesion Info and LRVs
+    - For every LRV, my-gpmf.js and getter.py
+    - ./make_instagram_content.sh
+    - ./upload_to_instagram.sh
+    - Makes a VOD for Youtube
+    - Uploads to Youtube
 
