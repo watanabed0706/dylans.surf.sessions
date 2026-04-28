@@ -59,7 +59,7 @@ def get_timestamps(df):
 
 def filter_em(starts,ends):
     for i in range(len(starts)):
-        if ((ends[i] - starts[i]) <= 7):
+        if ((ends[i] - starts[i]) <= 5):
             starts.pop(i)
             ends.pop(i)
             starts,ends = filter_em(starts,ends)
@@ -105,6 +105,9 @@ def add_best(starts,ends):
     if(starts):
         inpoint, outpoint = max(zip(starts, ends), key=lambda x: x[1] - x[0])
         wavetime = outpoint - inpoint
+        if (wavetime >= 60):
+            inpoint += ((wavetime - 60)/2) + 1
+            outpoint -= ((wavetime - 60)/2) + 1
 
         with open(SESH, 'r') as file:
             this_sesh = json.load(file)

@@ -2,7 +2,7 @@ SEARCH_DIR="/mnt/hero11sd/DCIM/100GOPRO"
 TARGET_DATE="${1:-$(date +%Y-%m-%d)}"
 NEXT_DAY=$(date -d "$TARGET_DATE + 1 day" +%Y-%m-%d)
 INFILE="./data/lrv_list.txt"
-VIDEO_NAME="./to_upload/$TARGET_DATE.MP4"
+VIDEO_NAME="./youtube/to_upload/$TARGET_DATE.MP4"
 CLIPS="./data/clips.txt"
 SESH="./data/this_sesh.json"
 
@@ -45,7 +45,8 @@ done < "$INFILE"
 ./instagram/upload_to_instagram.sh
 
 #Copy clips into a VOD
-ffmpeg -f concat -safe 0 -i $CLIPS -c copy "./youtube/$VIDEO_NAME"
+rm ./youtube/to_upload/*
+ffmpeg -loglevel error -y -f concat -safe 0 -i $CLIPS -c copy $VIDEO_NAME
 
 #Upload VOD to YouTube
-./youtube/upload_to_youtube.sh "$VIDEO_NAME"
+./youtube/youtubeuploader -filename "$VIDEO_NAME"

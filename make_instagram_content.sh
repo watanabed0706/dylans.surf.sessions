@@ -23,6 +23,9 @@ MINUTES=$(jq -r '.MINUTES' $SESH)
 # Number of Waves (over 17seconds)
 NUM_WAVES=$(jq -r '.NUM_GOOD_WAVES' $SESH)
 
+# Clear to_upload file
+rm ./instagram/to_upload/*
+
 # Picking a Thumbnail (2/3rds into Best Wave OR Sesh's most recent JPG)
 FRAME=$(echo "scale=2; $(jq -r '.GOOD_CLIPS[0].inpoint' $SESH) + ($(jq -r '.GOOD_CLIPS[0].wavetime' $SESH) * 0.67)" | bc)
 JPG=$(find $SD_CARD -name "*.JPG" -newermt $DATE ! -newermt $NEXT_DATE -printf "%T+ %p\n" | sort -r | head -1 | cut -d' ' -f2-)
@@ -84,12 +87,12 @@ add_text "HOURS" 45 0.95 0.85
 add_text "$HOURS'\:'$MINUTES" 100 0.8 0.85
 
 
-# Make Square Clips of the 3 best waves
+# Make Square Clips of the 7 best waves
 count=0
 jq -c '.GOOD_CLIPS[]' "$SESH" | while read -r wave; do
     ((count++))
 
-    if [ "$count" -gt 3 ]; then
+    if [ "$count" -gt 7 ]; then
         break
     fi
 

@@ -21,6 +21,7 @@ def video_container(mp4_url):
         "access_token":ACCESS_TOKEN
     }
     r = requests.post(url, data=payload)
+    print(url,payload,r.json())
     return r.json().get('id')
 
 def image_container(jpg_url):
@@ -31,6 +32,7 @@ def image_container(jpg_url):
         "access_token":ACCESS_TOKEN
         }
     r = requests.post(url, data=payload)
+    print(url,payload,r.json())
     return r.json().get('id')
 
 def carousel_container(id_list):
@@ -42,6 +44,7 @@ def carousel_container(id_list):
         "access_token":ACCESS_TOKEN
     }
     r = requests.post(url, data=payload)
+    print(url,payload,r.json())
     return r.json().get('id')
 
 def publish_media(creation_id):
