@@ -53,8 +53,7 @@ As my senior Project, I decided to build a program that automatically:
     - Where my-gpmf.js saves data for getter.py to process it
     - Overwritten every clip
 
-### Auto_Edit.sh:
-The Main Script in the Program
+### Auto_Edit.sh: (The Main Script)
 
   - Arguments:
     - Target_Date (YYYY-MM-DD)
@@ -69,4 +68,25 @@ The Main Script in the Program
     - ./upload_to_instagram.sh
     - Makes a VOD for Youtube
     - Uploads to Youtube
+
+### my-gpmf.js (Retrieving Metadata from the LRV files):
+Despite the name of the program, the implementation is not mine...
+
+This whole project wouldn't have been possible without [GoPro](https://github.com/gopro) releasing [GPMF](https://github.com/gopro/gpmf-parser) as Open Source and [JuanIrache](https://github.com/JuanIrache)'s [gmpf-extract](https://github.com/JuanIrache/gpmf-extract) & [gopro-telemetry](https://github.com/juanirache/gopro-telemetry)
+
+### getter.py: (Wave Detection Logic)
+Once my-gpmf.js has saves the data streams as a JSON file (gmpf.json), getter.py reads it and converts it to a pandas DataFrame for analysis. GMPF contains an extensive amount of metadata, of which only a small portion is necessary for wave detection. In getter.py, the six attributes used are...
+  - X-Acceleration
+  - Y-Acceleration
+  - Z-Acceleration
+  - X-Rotation
+  - Y-Rotation
+  - Z-Rotation
+The sample rate for each of these data points is 200 times a second, and I've found their accuracy to be relatively high. Whenever the camera is sitting perfectly still, an acceleration of roughly 9.81m/s^2 in the upward direction and 1.2m/s^2 in the forward direction. The upward acceleration is caused by the normal force resisting gravity. As for the anomaly in forward acceleration, I have no idea what it is caused by.
+
+The Previous Original Logic for wave detection was searching for moments of near free fall. In other words, instances when the accelerometer did not detect any major forces (gravity included) in any particular direction. It would stitch those within 4 seconds of eachother together as intervals, and later merge any close intervals together. Any intervals over 14 seconds were considered waves. Though a seemingly over-simplified and random heuristic, it worked rather consistently for most shortboarding waves.
+
+The New Logic behind wave detection utilizes a machine learning model trained on ___ samples from 10 different sessions to find more specific patterns from waves. This also allows classification of more than just waves but also other events while surfing such as duck-dives and specific maneuvers such as cutbacks.
+
+### 
 
