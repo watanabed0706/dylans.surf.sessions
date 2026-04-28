@@ -37,22 +37,22 @@ As my senior Project, I decided to build a program that automatically:
   - Given args are Target_Date(YYYY-MM-DD) and the path to the SD-CARD
     - If no date is specified, uses today
     - If no path, defaults to "/mnt/hero11sd/DCIM/100GOPRO"
-  - The data directory
-    - lrv_list.txt:
-      - Lists all Low Resolution Videos from target date
-      - Overwritten every run
-    - this_sesh.json:
-      - Holds Info about the session details
-      - (date/time, sesh duration, # of Waves, ...)
-      - Overwritten every run
-    - clips.txt:
-      - A list of Wave Timestamps
-      - Formatted specifically for usage with ffmpeg
-      - Overwritten every run
-    - YYYY.json:
-      - Holds session durations for the whole year
-      - Overwrites only single value at Target_Date
-    - gpmf.json:
-      - Where my-gpmf.js saves data for getter.py to process it
-      - Overwritten every clip
+### The data directory:
+- lrv_list.txt:
+    - Lists all Low Resolution Videos from target date
+    - Overwritten every run
+- this_sesh.json:
+    - Holds Info about the session details
+    - (date/time, sesh duration, # of Waves, ...)
+    - Overwritten every run
+- clips.txt:
+    - A list of Wave Timestamps
+    - Formatted specifically for usage with ffmpeg
+    - Overwritten every run
+- YYYY.json:
+    - Holds session durations for the whole year
+    - Overwrites only single value at Target_Date
+- gpmf.json:
+    - Where my-gpmf.js saves data for getter.py to process it
+    - Overwritten every clip
 
