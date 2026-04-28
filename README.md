@@ -13,22 +13,22 @@ As my senior Project, I decided to build a program that automatically:
 * ??
 
 ## Requirements:
-* GoPro HERO 11
+### GoPro HERO 11
   - Other HERO models may work...
     - Most models (11 included) order data, {Z,X,Y}
     - HERO 6 orders as {Y,-X,Z}
     - Other critical differences may exist to...
 
-* Computer with a UNIX-Based OS
+### Computer with a Debian-Based OS
   - I used ubuntu-server 24.04.1 LTS
 
-* USB connection to SD-Card
+### USB connection to SD-Card
   - Must be mounted before running
 
-* Buissiness Instagram Account (optional)
+### Buissiness Instagram Account (optional)
   - Required for Automatic Uploads
 
-* Youtube Account (optional)
+### Youtube Account (optional)
   - Required for Automatic Uploads
 
 ## Code Breakdown:
