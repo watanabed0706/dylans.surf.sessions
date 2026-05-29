@@ -1,17 +1,15 @@
-# Dylan's Surf Sessions (CPSLO CS Senior Project)
+# Dylan's Surf Sessions
 
-As my senior Project, I decided to build a program that automatically:
+Once run this program does the following:
 * Reads through files on my GoPro's SD-Card
 * Detects waves ridden via embedded GPMF Accelerometer/Gyroscope data
 * Creates wave clips utilizing those timestamps
 * Reports session details (date/time, sesh duration, # of Waves, ...)
 * Posts the clips to Instagram/YouTube
 
-## Usage:
 
-* $git clone https://github.com/watanabed0706/dylans.surf.sessions
-* ??
-* ./Auto_Edit.sh $DATE $PATH_TO_SD_CARD
+## Usage:
+./Auto_Edit.sh $DATE $PATH_TO_SD_CARD
 
 ## Requirements:
 ### GoPro HERO 11
