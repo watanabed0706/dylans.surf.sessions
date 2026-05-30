@@ -15,10 +15,9 @@ Once setup & run this program automatically does the following:
 
 ## Requirements:
 ### GoPro HERO 11
-  - Other HERO models may work...
-    - Most models (11 included) order data, {Z,X,Y}
-    - HERO 6 orders as {Y,-X,Z}
-    - Other critical differences may exist to...
+  - Most other HERO models may work...
+    - Models with gpmf in {Z,X,Y} format should work
+    - HERO 6 will NOT work; {Y,-X,Z}
 
 ### Computer with a Debian-Based OS
   - I used ubuntu-server 24.04.1 LTS
@@ -26,13 +25,12 @@ Once setup & run this program automatically does the following:
 ### USB connection to SD-Card
   - Must be mounted before running
 
-### Buissiness Instagram Account (optional)
+### Buissiness Instagram Account & YouTube Channel (optional)
   - Required for Automatic Uploads
 
-### Youtube Account (optional)
-  - Required for Automatic Uploads
 
-## Code Breakdown:
+
+# Code Breakdown:
 
 ### The data directory:
 - lrv_list.txt:
@@ -85,9 +83,7 @@ Once my-gpmf.js has saves the data streams as a JSON file (gmpf.json), getter.py
 
 The sample rate for each of these data points is 200 times a second, and I've found their accuracy to be relatively high. Whenever the camera is sitting perfectly still, an acceleration of roughly 9.81m/s^2 in the upward direction and 1.2m/s^2 in the forward direction. The upward acceleration is caused by the normal force resisting gravity. As for the anomaly in forward acceleration, I have no idea what it is caused by.
 
-The Previous Original Logic for wave detection was searching for moments of near free fall. In other words, instances when the accelerometer did not detect any major forces (gravity included) in any particular direction. It would stitch those within 4 seconds of eachother together as intervals, and later merge any close intervals together. Any intervals over 14 seconds were considered waves. Though a seemingly over-simplified and random heuristic, it worked rather consistently for most shortboarding waves.
-
-The New Logic behind wave detection utilizes a machine learning model trained on ___ samples from 10 different sessions to find more specific patterns from waves. This also allows classification of more than just waves but also other events while surfing such as duck-dives and specific maneuvers such as cutbacks.
+The logic for wave detection is to search for moments of near free fall. In other words, instances when the accelerometer did not detect any major forces (gravity included) in any particular direction. It stitches those within 4 seconds of eachother together as intervals, and later merge any close intervals together. Any intervals over 14 seconds were considered waves. Though a seemingly over-simplified and random heuristic, it worked rather consistently for most shortboarding waves.
 
 Any Waves Detected are added to:
   - data/clips.txt (ordered earliest wave first)
