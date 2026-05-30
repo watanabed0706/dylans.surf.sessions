@@ -7,6 +7,7 @@ Once run this program does the following:
 * Reports session details (date/time, sesh duration, # of Waves, ...)
 * Posts the clips to [Instagram](https://www.instagram.com/dylans.surf.sessions/)/[YouTube](https://www.youtube.com/@dylans.surf.sessions)
 
+![](/diagram1.png "Diagram1")
 
 ## Usage:
 ./Auto_Edit.sh $DATE $PATH_TO_SD_CARD
