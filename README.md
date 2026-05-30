@@ -1,6 +1,7 @@
 # Dylan's Surf Sessions
 
-Once run this program does the following:
+Once setup & run this program automatically does the following:
+
 * Reads through files on my GoPro's SD-Card
 * Detects waves ridden via embedded GPMF Accelerometer/Gyroscope data
 * Creates wave clips utilizing those timestamps
