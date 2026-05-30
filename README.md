@@ -45,6 +45,8 @@ The sample rate for each of these data points is 200 times a second, and I've fo
 
 The logic for wave detection is to search for moments of near free fall. In other words, instances when the accelerometer did not detect any major forces (gravity included) in any particular direction. It stitches those within 4 seconds of eachother together as intervals, and later merge any close intervals together. Any intervals over 14 seconds are recognized as waves. Though a seemingly over-simplified and random heuristic, it works consistently for most shortboarding waves.
 
+![](/diagram2.png "Diagram2")
+
 
 Any Waves Detected are added to:
   - data/clips.txt (ordered earliest wave first)
