@@ -14,6 +14,7 @@ Once setup & run this program automatically does the following:
 ./Auto_Edit.sh $DATE $PATH_TO_SD_CARD
 
 ## Requirements:
+![](/hero11.jpg "HERO11")
 ### GoPro HERO 11
   - Most other HERO models may work...
     - Models with gpmf in {Z,X,Y} format should work
@@ -120,8 +121,8 @@ Meta Allows for Instagram Buisiness Accounts to publish content via API calls.
 
 In order for this to happen, you need to be sure that your instagram is set as a Professional Buisiness Account. (There are several Tutuorials on how to do this, it's free and easy process.)
 
-It also requires an access token and your user id, but I'll get into that later...
+It also requires an access token and user id to be stored in a .env file.
 
 ### uploading to YouTube
-For this I used a 3rd-Party tool ([youtubeuploader](https://github.com/porjo/youtubeuploader)) I found on github...
+3rd-Party tool ([youtubeuploader](https://github.com/porjo/youtubeuploader))
 
