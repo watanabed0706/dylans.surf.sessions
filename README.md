@@ -1,5 +1,9 @@
 # Dylan's Surf Sessions
 
+This is a program that I built to automatically Clip, Edit & Post content from my surf sessions for me. It does so by using my GoPro's Built-In Accelerometer data to detect when I've ridden a wave. After every surf session, I connect my SD-card & run the program, and by the time I'm done rinsing my wetsuit, it's already posted to my social media.
+
+The reason why I built this program is because manually sifting through GoPro footage, downloading it, and editing it myself can take hours per session. Time is extremely valuable, especially as a surfer. Squeezing in time to surf is already difficult, and adding those extra hours of overhead is something I couldn't always afford. With this program, I've been able to consistently bring my GoPro surfing without having to worry about the editing afterwards.
+
 Once setup & run this program automatically does the following:
 
 * Reads through files on my GoPro's SD-Card
