@@ -1,24 +1,28 @@
-# Dylan's Surf Sessions (CPSLO CS Senior Project)
+# Dylan's Surf Sessions
 
-As my senior Project, I decided to build a program that automatically:
+This is a program that I built to automatically Clip, Edit & Post content from my surf sessions for me. It does so by using my GoPro's Built-In Accelerometer data to detect when I've ridden a wave. After every surf session, I connect my SD-card & run the program, and by the time I'm done rinsing my wetsuit, it's already posted to my social media.
+
+The reason why I built this program is because manually sifting through GoPro footage, downloading it, and editing it myself can take hours per session. Time is extremely valuable, especially as a surfer. Squeezing in time to surf is already difficult, and adding those extra hours of overhead is something I couldn't always afford. With this program, I've been able to consistently bring my GoPro surfing without having to worry about the editing afterwards.
+
+Once setup & run this program automatically does the following:
+
 * Reads through files on my GoPro's SD-Card
 * Detects waves ridden via embedded GPMF Accelerometer/Gyroscope data
 * Creates wave clips utilizing those timestamps
 * Reports session details (date/time, sesh duration, # of Waves, ...)
-* Posts the clips to Instagram/YouTube
+* Posts the clips to [Instagram](https://www.instagram.com/dylans.surf.sessions/)/[YouTube](https://www.youtube.com/@dylans.surf.sessions)
+
+![](/diagram1.png "Diagram1")
 
 ## Usage:
-
-* $git clone https://github.com/watanabed0706/dylans.surf.sessions
-* ??
-* ./Auto_Edit.sh $DATE $PATH_TO_SD_CARD
+./Auto_Edit.sh $DATE $PATH_TO_SD_CARD
 
 ## Requirements:
+![](/hero11.jpg "HERO11")
 ### GoPro HERO 11
-  - Other HERO models may work...
-    - Most models (11 included) order data, {Z,X,Y}
-    - HERO 6 orders as {Y,-X,Z}
-    - Other critical differences may exist to...
+  - Most other HERO models may work...
+    - Models with gpmf in {Z,X,Y} format should work
+    - HERO 6 will NOT work; {Y,-X,Z}
 
 ### Computer with a Debian-Based OS
   - I used ubuntu-server 24.04.1 LTS
@@ -26,14 +30,33 @@ As my senior Project, I decided to build a program that automatically:
 ### USB connection to SD-Card
   - Must be mounted before running
 
-### Buissiness Instagram Account (optional)
+### Buissiness Instagram Account & YouTube Channel (optional)
   - Required for Automatic Uploads
 
-### Youtube Account (optional)
-  - Required for Automatic Uploads
 
-## Code Breakdown:
 
+# Code Breakdown:
+
+### getter.py: (Wave Detection Logic)
+Once my-gpmf.js has saves the data streams as a JSON file (gmpf.json), getter.py reads it and converts it to a pandas DataFrame for analysis. GMPF contains an extensive amount of metadata, of which only a small portion is necessary for wave detection. In getter.py, the six attributes used are...
+  - X-Acceleration
+  - Y-Acceleration
+  - Z-Acceleration
+  - X-Rotation
+  - Y-Rotation
+  - Z-Rotation
+
+The sample rate for each of these data points is 200 times a second, and I've found their accuracy to be relatively high. Whenever the camera is sitting perfectly still, an acceleration of roughly 9.81m/s^2 in the upward direction and 1.2m/s^2 in the forward direction. The upward acceleration is caused by the normal force resisting gravity. As for the anomaly in forward acceleration, I have no idea what it is caused by.
+
+The logic for wave detection is to search for moments of near free fall. In other words, instances when the accelerometer did not detect any major forces (gravity included) in any particular direction. It stitches less than 4 seconds of eachother together as intervals, and later merge any close intervals together. Any significant intervals recognized as waves. Though a seemingly over-simplified and random heuristic, it works consistently for most shortboarding waves.
+
+![](/freefall_graph.png "Freefall_Graph")
+
+
+Any Waves Detected are added to:
+  - data/clips.txt (ordered earliest wave first)
+  - data/this_sesh (ordered longest wave first)
+    
 ### The data directory:
 - lrv_list.txt:
     - Lists all Low Resolution Videos from target date
@@ -74,25 +97,6 @@ Despite the name of the program, the implementation is not mine...
 
 This whole project wouldn't have been possible without [GoPro](https://github.com/gopro) releasing [GPMF](https://github.com/gopro/gpmf-parser) as Open Source and [JuanIrache](https://github.com/JuanIrache)'s [gmpf-extract](https://github.com/JuanIrache/gpmf-extract) & [gopro-telemetry](https://github.com/juanirache/gopro-telemetry)
 
-### getter.py: (Wave Detection Logic)
-Once my-gpmf.js has saves the data streams as a JSON file (gmpf.json), getter.py reads it and converts it to a pandas DataFrame for analysis. GMPF contains an extensive amount of metadata, of which only a small portion is necessary for wave detection. In getter.py, the six attributes used are...
-  - X-Acceleration
-  - Y-Acceleration
-  - Z-Acceleration
-  - X-Rotation
-  - Y-Rotation
-  - Z-Rotation
-
-The sample rate for each of these data points is 200 times a second, and I've found their accuracy to be relatively high. Whenever the camera is sitting perfectly still, an acceleration of roughly 9.81m/s^2 in the upward direction and 1.2m/s^2 in the forward direction. The upward acceleration is caused by the normal force resisting gravity. As for the anomaly in forward acceleration, I have no idea what it is caused by.
-
-The Previous Original Logic for wave detection was searching for moments of near free fall. In other words, instances when the accelerometer did not detect any major forces (gravity included) in any particular direction. It would stitch those within 4 seconds of eachother together as intervals, and later merge any close intervals together. Any intervals over 14 seconds were considered waves. Though a seemingly over-simplified and random heuristic, it worked rather consistently for most shortboarding waves.
-
-The New Logic behind wave detection utilizes a machine learning model trained on ___ samples from 10 different sessions to find more specific patterns from waves. This also allows classification of more than just waves but also other events while surfing such as duck-dives and specific maneuvers such as cutbacks.
-
-Any Waves Detected are added to:
-  - data/clips.txt (ordered earliest wave first)
-  - data/this_sesh (ordered longest wave first)
-
 ### make_instagram_content.sh: (Square Media)
 Via a lot of shell scripting and ffmpeg, this generates a bunch of square photos and videos suitable to be uploaded to instagram as a carousel post.
 
@@ -121,8 +125,8 @@ Meta Allows for Instagram Buisiness Accounts to publish content via API calls.
 
 In order for this to happen, you need to be sure that your instagram is set as a Professional Buisiness Account. (There are several Tutuorials on how to do this, it's free and easy process.)
 
-It also requires an access token and your user id, but I'll get into that later...
+It also requires an access token and user id to be stored in a .env file.
 
 ### uploading to YouTube
-For this I used a 3rd-Party tool ([youtubeuploader](https://github.com/porjo/youtubeuploader)) I found on github...
+3rd-Party tool ([youtubeuploader](https://github.com/porjo/youtubeuploader))
 
